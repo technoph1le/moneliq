@@ -1,30 +1,35 @@
+"use client";
+
 import React from "react";
-import { Form, Input, Button } from "@heroui/react";
+import { Card, Tab, Tabs, CardBody } from "@heroui/react";
+import FormComponent from "@/components/auth/form";
 
 export default function AuthPage() {
-  return (
-    <Form className="w-full max-w-md mx-auto space-y-4 p-8 rounded-xl border">
-      <Input
-        isRequired
-        label="Email"
-        errorMessage="Please enter a valid email"
-        type="email"
-      />
-      <Input
-        isRequired
-        label="Password"
-        errorMessage="Please enter a password"
-        type="password"
-      />
+  const [selected, setSelected] = React.useState("member");
 
-      <div className="flex gap-2">
-        <Button color="primary" type="submit">
-          Submit
-        </Button>
-        <Button type="reset" variant="flat">
-          Reset
-        </Button>
-      </div>
-    </Form>
+  return (
+    <>
+      <Tabs
+        className="mx-auto w-fit flex"
+        aria-label="Tabs form"
+        selectedKey={selected}
+        size="lg"
+        radius="full"
+        color="primary"
+        onSelectionChange={(key) => setSelected(String(key))}
+      >
+        <Tab key="member" title="Member">
+          {null}
+        </Tab>
+        <Tab key="partner" title="Partner">
+          {null}
+        </Tab>
+      </Tabs>
+      <Card className="max-w-md mx-auto my-8">
+        <CardBody className="overflow-hidden">
+          <FormComponent />
+        </CardBody>
+      </Card>
+    </>
   );
 }

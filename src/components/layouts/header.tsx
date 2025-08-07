@@ -1,6 +1,6 @@
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem } from "@heroui/react";
-import DarkModeToggle from "./DarkModeToggle";
-import Logo from "./Logo";
+import DarkModeToggle from "../ui/dark-mode-toggle";
+import Logo from "../ui/logo";
 
 export default function Header() {
   return (
