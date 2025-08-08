@@ -1,11 +1,19 @@
 "use client";
 
+import { useAuthStore } from "@/stores/AuthStore";
 import { Button, Form, Input, InputOtp } from "@heroui/react";
 import { Eye, EyeClosed } from "lucide-react";
 import { useState } from "react";
 
-export default function FormComponent() {
+export default function LoginForm() {
+  const { accountType } = useAuthStore();
   const [isVisible, setIsVisible] = useState(false);
+
+  interface SubmitEvent extends React.FormEvent<HTMLFormElement> {}
+
+  const onSubmit = async (event: SubmitEvent): Promise<void> => {
+    event.preventDefault();
+  };
 
   const toggleVisibility = () => setIsVisible(!isVisible);
 
@@ -38,7 +46,6 @@ export default function FormComponent() {
           </button>
         }
         label="Password"
-        placeholder="Enter your password"
         type={isVisible ? "text" : "password"}
         variant="bordered"
       />
@@ -49,7 +56,6 @@ export default function FormComponent() {
         length={6}
         name="otp"
         placeholder="Enter OTP code"
-        className="mx-auto"
       />
 
       <Button color="primary" fullWidth>

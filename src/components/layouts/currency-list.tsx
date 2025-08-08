@@ -35,7 +35,7 @@ export default function CurrencyList() {
   return (
     <div>
       {currencies.map((currency) => (
-        <p>
+        <p key={currency.id}>
           {currency.code}, {currency.symbol}
         </p>
       ))}

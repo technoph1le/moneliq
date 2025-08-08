@@ -14,7 +14,7 @@ import { useRouter } from "next/navigation";
 import { LogOut } from "lucide-react";
 
 export default function Header() {
-  const { user, isAuthenticated, logout } = useAuthStore();
+  const { isAuthenticated, logout } = useAuthStore();
   const router = useRouter();
 
   const handleLogout = () => {
