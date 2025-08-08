@@ -1,3 +1,9 @@
 export default function DashboardPage() {
-  return <h1>This is dashboard</h1>;
+  return (
+    <section className="py-8">
+      <div className="container-sm ">
+        <div className="border">this is a section</div>
+      </div>
+    </section>
+  );
 }
