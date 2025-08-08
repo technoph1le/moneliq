@@ -10,7 +10,7 @@ interface AuthState {
   initAuth: () => void;
 }
 
-export const AuthStore = create<AuthState>((set) => ({
+export const useAuthStore = create<AuthState>((set) => ({
   user: null,
   isAuthenticated: false,
 

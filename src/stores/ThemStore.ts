@@ -4,23 +4,26 @@ type Theme = "light" | "dark";
 
 interface ThemeState {
   theme: Theme | null;
-  toggleTheme: (t: Theme) => void;
   setTheme: (t: Theme) => void;
+  showTheme: (t: Theme) => void;
   initTheme: () => void;
 }
 
-export const ThemeStore = create<ThemeState>((set) => ({
-  theme: "light",
-
-  toggleTheme: (theme) => {
-    const newTheme = theme === "light" ? "dark" : "light";
-    localStorage.setItem("theme", newTheme);
-    set({ theme: newTheme });
-  },
+export const useThemeStore = create<ThemeState>((set, get) => ({
+  theme: "dark",
 
   setTheme: (theme) => {
     localStorage.setItem("theme", theme);
     set({ theme });
+    get().showTheme(theme);
+  },
+
+  showTheme: (theme) => {
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
   },
 
   initTheme: () => {
@@ -29,6 +32,7 @@ export const ThemeStore = create<ThemeState>((set) => ({
       if (storedTheme) {
         const theme: Theme = JSON.parse(storedTheme);
         set({ theme });
+        get().showTheme(theme);
       }
     } catch (error) {
       console.error("Failed to get theme from localStorage", error);

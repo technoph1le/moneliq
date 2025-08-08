@@ -25,9 +25,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen dark`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-neutral-100 text-neutral-800 dark:bg-neutral-950 dark:text-neutral-200`}
       >
         <HeroUIProvider>
           <Header />
