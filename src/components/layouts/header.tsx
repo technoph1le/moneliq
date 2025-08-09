@@ -14,7 +14,7 @@ import { useRouter } from "next/navigation";
 import { LogOut } from "lucide-react";
 
 export default function Header() {
-  const { isAuthenticated, logout } = useAuthStore();
+  const { isAuthenticated, accountType, logout } = useAuthStore();
   const router = useRouter();
 
   const handleLogout = () => {
@@ -29,6 +29,13 @@ export default function Header() {
       </NavbarBrand>
 
       <NavbarContent justify="end">
+        {isAuthenticated ? (
+          <NavbarItem>
+            <span className="text-sm">
+              Logged in as <strong>{accountType}</strong>
+            </span>
+          </NavbarItem>
+        ) : null}
         <NavbarItem>
           <DarkModeToggle />
         </NavbarItem>

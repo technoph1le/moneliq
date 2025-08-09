@@ -12,10 +12,18 @@ import {
   PARTNER_DEFAULT_OTP,
   PARTNER_DEFAULT_PASSWORD,
 } from "@/data/consts";
+import { useRouter } from "next/navigation";
 
 export default function AuthPage() {
   const [selected, setSelected] = useState<"member" | "partner">("member");
-  const { accountType, setAccountType } = useAuthStore();
+  const { isAuthenticated, accountType, setAccountType } = useAuthStore();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push("/dashboard");
+    }
+  }, [isAuthenticated, router]);
 
   useEffect(() => {
     setAccountType(selected);

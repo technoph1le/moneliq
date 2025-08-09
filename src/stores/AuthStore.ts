@@ -18,7 +18,7 @@ interface AuthState {
   setAccountType: (acc: AccountType) => void;
 
   mockLogin: (email: string, password: string, otp: string) => Promise<any>;
-  login: (email: string, password: string, otp: string) => void;
+  login: (email: string, password: string, otp: string) => Promise<any>;
   logout: () => void;
   // initAuth: () => void;
 }
@@ -36,28 +36,52 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   mockLogin: async (email, password, otp) => {
     return new Promise((resolve) => {
       setTimeout(() => {
-        if (
-          email === "member@valid.email" &&
-          password === "Member123!" &&
-          otp === "151588"
-        ) {
-          resolve({
-            success: true,
-            user: { id: "1", email: email },
-            type: "Member",
-          });
-        } else if (
-          email === "partner@valid.email" &&
-          password === "Partner123!" &&
-          otp === "262699"
-        ) {
-          resolve({
-            success: true,
-            user: { id: "2", email: email },
-            type: "Partner",
-          });
-        } else {
-          resolve({ success: false, message: "Invalid credentials or OTP." });
+        switch (get().accountType) {
+          case "member": {
+            if (
+              email === "member@valid.email" &&
+              password === "Member123!" &&
+              otp === "151588"
+            ) {
+              resolve({
+                success: true,
+                user: { id: "1", email: email },
+                type: "Member",
+              });
+            } else {
+              resolve({
+                success: false,
+                message: "Invalid credentials or OTP for member.",
+              });
+            }
+            return;
+          }
+
+          case "partner": {
+            if (
+              email === "partner@valid.email" &&
+              password === "Partner123!" &&
+              otp === "262699"
+            ) {
+              resolve({
+                success: true,
+                user: { id: "2", email: email },
+                type: "Partner",
+              });
+            } else {
+              resolve({
+                success: false,
+                message: "Invalid credentials or OTP for partner.",
+              });
+            }
+            return;
+          }
+          default: {
+            resolve({
+              success: false,
+              message: "Invalid credentials or OTP.",
+            });
+          }
         }
       }, 1000); // Simulate network delay
     });
@@ -65,6 +89,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
 
   login: async (email, password, otp) => {
     set({ isLoading: true, error: "" });
+    console.log("Login started");
 
     try {
       const response = await get().mockLogin(email, password, otp);
